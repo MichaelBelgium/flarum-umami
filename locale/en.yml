@@ -1,2 +1,9 @@
 michaelbelgium-umami:
   admin:
+    settings:
+      site_id:
+        label: 'Website ID'
+        help: 'The website ID of this Flarum instance on Umami. You can find this in the details of the website settings on Umami.'
+      domain:
+        label: 'Domain'
+        help: 'The domain where Umami is located.'
