@@ -23,12 +23,12 @@
     },
     "extra": {
         "flarum-extension": {
-            "title": "Flarum Umami",
+            "title": "Umami",
             "category": "feature",
             "icon": {
                 "name": "fas fa-chart-line",
                 "color": "#fff",
-                "backgroundColor": "#4338CA"
+                "backgroundColor": "#e5b710"
             }
         },
         "flarum-cli": {
