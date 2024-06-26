@@ -1,0 +1,46 @@
+.DashboardPage .UmamiWidget {
+  h4 {
+    color: @muted-color;
+    margin-top: 0;
+  }
+
+  .UmamiWidget-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 25%;
+
+    section {
+      dt {
+        color: #111;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: right;
+
+        span {
+          font-size: 12px;
+          padding: 0 5px;
+
+          &.more {
+            color: #15a46e;
+            background: #cef8e0;
+          }
+
+          &.less {
+            color: #f75c46;
+            background: #ffebe7;
+          }
+        }
+      }
+
+      h3 {
+        font-size: 12px;
+        color: @muted-color;
+        text-transform: uppercase;
+
+        i.fa-circle {
+          color: green;
+        }
+      }
+    }
+  }
+}

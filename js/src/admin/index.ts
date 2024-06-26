@@ -1,4 +1,7 @@
 import app from 'flarum/admin/app';
+import { extend } from 'flarum/common/extend';
+import DashboardPage from 'flarum/admin/components/DashboardPage';
+import UmamiWidget from './components/UmamiWidget';
 
 app.initializers.add('michaelbelgium/flarum-umami', () => {
   app.extensionData
@@ -16,5 +19,19 @@ app.initializers.add('michaelbelgium/flarum-umami', () => {
       help: app.translator.trans('michaelbelgium-umami.admin.settings.domain.help'),
       placeholder: 'https://umami.yourdomain.com',
       type: 'text',
+    })
+    .registerSetting({
+      setting: 'michaelbelgium-umami.api_username',
+      label: app.translator.trans('michaelbelgium-umami.admin.settings.username.label'),
+      type: 'text',
+    })
+    .registerSetting({
+      setting: 'michaelbelgium-umami.api_password',
+      label: app.translator.trans('michaelbelgium-umami.admin.settings.password.label'),
+      type: 'password',
     });
+
+  extend(DashboardPage.prototype, 'availableWidgets', function (widgets) {
+    widgets.add('umami', UmamiWidget.component());
+  });
 });

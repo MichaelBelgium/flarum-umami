@@ -1,9 +1,20 @@
 michaelbelgium-umami:
   admin:
+    widget:
+      live: 'Live'
+      views: 'Page views'
+      visits: 'Visits'
+      visitors: 'Visitors'
     settings:
+      errors:
+        no_connection: 'Could not fetch statistics, please check your API credentials.'
       site_id:
         label: 'Website ID'
         help: 'The website ID of this Flarum instance on Umami. You can find this in the details of the website settings on Umami.'
       domain:
         label: 'Domain'
         help: 'The domain where Umami is located.'
+      username:
+        label: 'API Username'
+      password:
+        label: 'API Password'
