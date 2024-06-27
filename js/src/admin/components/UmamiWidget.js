@@ -49,7 +49,10 @@ export default class UmamiWidget extends DashboardWidget {
 
     return (
       <div>
-        <h4>Umami statistics</h4>
+        <h4>
+          Umami statistics • {this.loading ? <LoadingIndicator size="small" /> : this.website.name} •{' '}
+          {this.loading ? <LoadingIndicator size="small" /> : this.website.domain}
+        </h4>
         <div className="UmamiWidget-stats">
           <section>
             <dt>{this.loading ? <LoadingIndicator size="small" display="inline" /> : <>{this.stats.live}</>}</dt>
