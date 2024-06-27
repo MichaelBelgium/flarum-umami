@@ -27,12 +27,9 @@ export default class Umami {
       return false;
     }
 
-    const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    const targetUrl = app.data.settings['michaelbelgium-umami.domain'] + '/api/auth/login';
-
     try {
       const response = await app.request({
-        url: corsProxyUrl + targetUrl,
+        url: app.data.settings['michaelbelgium-umami.domain'] + '/api/auth/login',
         method: 'POST',
         body: {
           username: app.data.settings['michaelbelgium-umami.api_username'],
