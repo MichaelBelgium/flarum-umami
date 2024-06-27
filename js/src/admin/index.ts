@@ -23,11 +23,13 @@ app.initializers.add('michaelbelgium/flarum-umami', () => {
     .registerSetting({
       setting: 'michaelbelgium-umami.api_username',
       label: app.translator.trans('michaelbelgium-umami.admin.settings.username.label'),
+      help: app.translator.trans('michaelbelgium-umami.admin.settings.username.help'),
       type: 'text',
     })
     .registerSetting({
       setting: 'michaelbelgium-umami.api_password',
       label: app.translator.trans('michaelbelgium-umami.admin.settings.password.label'),
+      help: app.translator.trans('michaelbelgium-umami.admin.settings.password.help'),
       type: 'password',
     });
 
