@@ -20,8 +20,13 @@ export default class UmamiWidget extends DashboardWidget {
     this.success = await this.umami.login();
 
     if (this.success) {
-      this.stats = await this.umami.websiteStats();
       this.website = await this.umami.website();
+
+      if (this.website === null) {
+        this.success = false;
+      } else {
+        this.stats = await this.umami.websiteStats();
+      }
     }
 
     this.loading = false;
