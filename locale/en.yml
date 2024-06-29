@@ -18,5 +18,5 @@ michaelbelgium-umami:
         label: 'Account username'
         help: 'Optional. The username of an umami account on the above domain. (used for the admin dashboard widget)'
       password:
-        label: 'API Password'
+        label: 'Account password'
         help: 'Optional. The password of the username above. (used for the admin dashboard widget)'
