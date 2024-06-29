@@ -66,7 +66,7 @@ export default class UmamiWidget extends DashboardWidget {
                 <LoadingIndicator size="small" display="inline" />
               ) : (
                 <>
-                  {this.stats.pageviews.value} {this.changeToSpan(this.stats.visits.change)}
+                  {this.stats.pageviews.value} {this.changeToSpan(this.stats.pageviews.change)}
                 </>
               )}
             </dt>
@@ -78,7 +78,7 @@ export default class UmamiWidget extends DashboardWidget {
                 <LoadingIndicator size="small" display="inline" />
               ) : (
                 <>
-                  {this.stats.visits.value} {this.changeToSpan(this.stats.visits.value)}
+                  {this.stats.visits.value} {this.changeToSpan(this.stats.visits.change)}
                 </>
               )}
             </dt>
