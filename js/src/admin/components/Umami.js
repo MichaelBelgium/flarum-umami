@@ -28,17 +28,27 @@ export default class Umami {
     }
 
     try {
-      const response = await app.request({
-        url: app.data.settings['michaelbelgium-umami.domain'] + '/api/auth/login',
+      const response = await fetch(app.data.settings['michaelbelgium-umami.domain'] + '/api/auth/login', {
         method: 'POST',
-        body: {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           username: app.data.settings['michaelbelgium-umami.api_username'],
           password: app.data.settings['michaelbelgium-umami.api_password'],
-        },
+        }),
       });
 
-      this.bearerToken = response.token;
-      console.info('[michaelbelgium-umami] Logged in as', response.user.username);
+      if (!response.ok) {
+        console.error('[michaelbelgium-umami] Error logging in:', json);
+        return false;
+      }
+
+      const json = await response.json();
+
+      this.bearerToken = json.token;
+
+      console.info('[michaelbelgium-umami] Logged in as', json.user.username);
       return true;
     } catch (error) {
       console.error('[michaelbelgium-umami] Error logging in:', error);
@@ -47,13 +57,23 @@ export default class Umami {
   }
 
   async website() {
-    return await app.request({
-      url: app.data.settings['michaelbelgium-umami.domain'] + '/api/websites/' + app.data.settings['michaelbelgium-umami.site_id'],
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + this.bearerToken,
-      },
-    });
+    const response = await fetch(
+      app.data.settings['michaelbelgium-umami.domain'] + '/api/websites/' + app.data.settings['michaelbelgium-umami.site_id'],
+      {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + this.bearerToken,
+          Origin: app.forum.attribute('baseUrl'),
+        },
+      }
+    );
+
+    if (!response.ok) {
+      console.error('[michaelbelgium-umami] Error fetching website:', json);
+      return null;
+    }
+
+    return await response.json();
   }
 
   async websiteStats() {
@@ -63,29 +83,39 @@ export default class Umami {
     const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     weekAgo.setHours(0, 0, 0, 0);
 
-    let response = await app.request({
-      url: app.data.settings['michaelbelgium-umami.domain'] + '/api/websites/' + app.data.settings['michaelbelgium-umami.site_id'] + '/stats',
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + this.bearerToken,
-      },
-      params: {
-        startAt: weekAgo.getTime(),
-        endAt: now.getTime(),
-      },
-    });
+    let response = await fetch(
+      app.data.settings['michaelbelgium-umami.domain'] +
+        '/api/websites/' +
+        app.data.settings['michaelbelgium-umami.site_id'] +
+        '/stats' +
+        '?startAt=' +
+        weekAgo.getTime() +
+        '&endAt=' +
+        now.getTime(),
+      {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + this.bearerToken,
+          Origin: app.forum.attribute('baseUrl'),
+        },
+      }
+    );
 
-    stats = response;
+    stats = await response.json();
 
-    response = await app.request({
-      url: app.data.settings['michaelbelgium-umami.domain'] + '/api/websites/' + app.data.settings['michaelbelgium-umami.site_id'] + '/active',
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + this.bearerToken,
-      },
-    });
+    response = await fetch(
+      app.data.settings['michaelbelgium-umami.domain'] + '/api/websites/' + app.data.settings['michaelbelgium-umami.site_id'] + '/active',
+      {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + this.bearerToken,
+          Origin: app.forum.attribute('baseUrl'),
+        },
+      }
+    );
 
-    stats.live = response.x;
+    const tmp = await response.json();
+    stats.live = tmp.x;
 
     return stats;
   }
